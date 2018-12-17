@@ -6,32 +6,29 @@ let links = [{
     title: 'Learn GraphQL!',
     description: 'GraphQL is a query language for APIs and a runtime for fulfilling those queries with your existing data.'
 }]
-const typeDefs =`
-  type Query {
-      info: String!
-      feed: [Link!]!
-  }
-  type Link {
-      id: ID!
-      track: String!
-      title: String!
-      description: Post!
-
-      type Post {
-          content: String!
-      }
-  }
-`
+let idCount = links.length
 
 const resolvers = {
     Query: {
         info: () => `This is the API of my Lambda Central project`,
-        feed: () => links
+        feed: () => links,
+    },
+    Mutation: {
+        post: (root, args) => {
+            const link = {
+                id: `link-${idCount++}`,
+                description: args.description,
+                url: args.url
+            }
+            links.push(link)
+            return link
+        }
     }
+ 
 }
 
 const server = new GraphQLServer({
-    typeDefs,
+    typeDefs: './src/schema.graphql',
     resolvers
 })
 
