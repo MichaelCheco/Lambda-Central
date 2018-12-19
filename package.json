@@ -5,9 +5,10 @@
   "license": "MIT",
   "dependencies": {
     "bcryptjs": "^2.4.3",
+    "graphql": "^14.0.2",
     "graphql-yoga": "^1.16.7",
     "jsonwebtoken": "^8.4.0",
     "prisma-binding": "^2.2.11",
-    "prisma-client-lib": "^1.22.2"
+    "prisma-client-lib": "^1.23.0"
   }
 }
