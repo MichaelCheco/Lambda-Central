@@ -11,5 +11,5 @@ generate:
     output: ../src/generated/prisma-client
 
     hooks:
-  post-deploy:
-    - prisma generate
+      post-deploy:
+        - prisma generate
