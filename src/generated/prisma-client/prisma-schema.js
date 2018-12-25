@@ -3,6 +3,10 @@ module.exports = {
   count: Int!
 }
 
+type AggregateTrack {
+  count: Int!
+}
+
 type AggregateUser {
   count: Int!
 }
@@ -260,6 +264,12 @@ type Mutation {
   upsertLink(where: LinkWhereUniqueInput!, create: LinkCreateInput!, update: LinkUpdateInput!): Link!
   deleteLink(where: LinkWhereUniqueInput!): Link
   deleteManyLinks(where: LinkWhereInput): BatchPayload!
+  createTrack(data: TrackCreateInput!): Track!
+  updateTrack(data: TrackUpdateInput!, where: TrackWhereUniqueInput!): Track
+  updateManyTracks(data: TrackUpdateManyMutationInput!, where: TrackWhereInput): BatchPayload!
+  upsertTrack(where: TrackWhereUniqueInput!, create: TrackCreateInput!, update: TrackUpdateInput!): Track!
+  deleteTrack(where: TrackWhereUniqueInput!): Track
+  deleteManyTracks(where: TrackWhereInput): BatchPayload!
   createUser(data: UserCreateInput!): User!
   updateUser(data: UserUpdateInput!, where: UserWhereUniqueInput!): User
   updateManyUsers(data: UserUpdateManyMutationInput!, where: UserWhereInput): BatchPayload!
@@ -289,6 +299,9 @@ type Query {
   link(where: LinkWhereUniqueInput!): Link
   links(where: LinkWhereInput, orderBy: LinkOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Link]!
   linksConnection(where: LinkWhereInput, orderBy: LinkOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): LinkConnection!
+  track(where: TrackWhereUniqueInput!): Track
+  tracks(where: TrackWhereInput, orderBy: TrackOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Track]!
+  tracksConnection(where: TrackWhereInput, orderBy: TrackOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): TrackConnection!
   user(where: UserWhereUniqueInput!): User
   users(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User]!
   usersConnection(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): UserConnection!
@@ -297,7 +310,92 @@ type Query {
 
 type Subscription {
   link(where: LinkSubscriptionWhereInput): LinkSubscriptionPayload
+  track(where: TrackSubscriptionWhereInput): TrackSubscriptionPayload
   user(where: UserSubscriptionWhereInput): UserSubscriptionPayload
+}
+
+type Track {
+  name: String!
+}
+
+type TrackConnection {
+  pageInfo: PageInfo!
+  edges: [TrackEdge]!
+  aggregate: AggregateTrack!
+}
+
+input TrackCreateInput {
+  name: String!
+}
+
+type TrackEdge {
+  node: Track!
+  cursor: String!
+}
+
+enum TrackOrderByInput {
+  name_ASC
+  name_DESC
+  id_ASC
+  id_DESC
+  createdAt_ASC
+  createdAt_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+}
+
+type TrackPreviousValues {
+  name: String!
+}
+
+type TrackSubscriptionPayload {
+  mutation: MutationType!
+  node: Track
+  updatedFields: [String!]
+  previousValues: TrackPreviousValues
+}
+
+input TrackSubscriptionWhereInput {
+  mutation_in: [MutationType!]
+  updatedFields_contains: String
+  updatedFields_contains_every: [String!]
+  updatedFields_contains_some: [String!]
+  node: TrackWhereInput
+  AND: [TrackSubscriptionWhereInput!]
+  OR: [TrackSubscriptionWhereInput!]
+  NOT: [TrackSubscriptionWhereInput!]
+}
+
+input TrackUpdateInput {
+  name: String
+}
+
+input TrackUpdateManyMutationInput {
+  name: String
+}
+
+input TrackWhereInput {
+  name: String
+  name_not: String
+  name_in: [String!]
+  name_not_in: [String!]
+  name_lt: String
+  name_lte: String
+  name_gt: String
+  name_gte: String
+  name_contains: String
+  name_not_contains: String
+  name_starts_with: String
+  name_not_starts_with: String
+  name_ends_with: String
+  name_not_ends_with: String
+  AND: [TrackWhereInput!]
+  OR: [TrackWhereInput!]
+  NOT: [TrackWhereInput!]
+}
+
+input TrackWhereUniqueInput {
+  name: String
 }
 
 type User {

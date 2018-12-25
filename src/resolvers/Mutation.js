@@ -43,9 +43,15 @@ function post(parent, args, context, info) {
         postedBy: { connect: { id: userId} }
     })
 }
+function createTrack(parent, args, context, info) {
+    return context.prisma.createTrack({
+        name: args.name
+    })
+}
 
 module.exports = {
     signup,
     login,
-    post
+    post,
+    createTrack,
 }
